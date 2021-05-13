@@ -145,6 +145,25 @@ public class Dao {
 		return results;
 	}
 	// continue coding for updateRecords implementation
+	public void deleteRecords() {
+	      System.out.println("Creating statement...");
+	      statement = connect.createStatement();
+	      String sql = "DELETE FROM jpapa_tickets  " +
+	                   "WHERE id = “ + ‘ “+tickID+ " ’;
+	    
+	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket # “ + tickID + “?”,
+	                               "Confirm",  JOptionPane.YES_NO_OPTION, 
+	                               JOptionPane.QUESTION_MESSAGE);
+	     if (response == JOptionPane.NO_OPTION) {
+	       System.out.println("No record deleted");
+	    } else if (response == JOptionPane.YES_OPTION) {
+	      stmt.executeUpdate(sql);
+	      System.out.println("Record deleted");
+	    } else if (response == JOptionPane.CLOSED_OPTION) {
+	      System.out.println("Request cancelled");
+	    }
+
+	}
 
 	// continue coding for deleteRecords implementation
 }
