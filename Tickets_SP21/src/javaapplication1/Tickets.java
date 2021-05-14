@@ -43,7 +43,7 @@ public class Tickets extends JFrame implements ActionListener {
 	}
 
 	private void createMenu() {
-
+	  if (chkIfAdmin == true) {
 		/* Initialize sub menu items **************************************/
 
 		// initialize sub menu item for File main menu
@@ -79,6 +79,7 @@ public class Tickets extends JFrame implements ActionListener {
 		mnuItemDelete.addActionListener(this);
 		mnuItemOpenTicket.addActionListener(this);
 		mnuItemViewTicket.addActionListener(this);
+	}
 
 		 /*
 		  * continue implementing any other desired sub menu items (like 
@@ -152,7 +153,12 @@ public class Tickets extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		//else if () {}
+		//else if (e.getSource() == mnuItemDelete) {
+			//String ticketNumber = JOptionPane.showInputDialog(null, "Enter ticket number");
+
+			//int id = dao.deleteRecords(ticketName, ticketDesc);
+			
+	}
 		/*
 		 * continue implementing any other desired sub menu items (like for update and
 		 * delete sub menus for example) with similar syntax & logic as shown above
@@ -160,4 +166,4 @@ public class Tickets extends JFrame implements ActionListener {
 
 	}
 
-}
+//}
