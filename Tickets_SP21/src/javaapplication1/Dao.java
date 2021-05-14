@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,8 +42,8 @@ public class Dao {
 
 	public void createTables() {
 		// variables for SQL Query table creations
-		final String createTicketsTable = "CREATE TABLE jpapa_tickets(ticket_id INT AUTO_INCREMENT PRIMARY KEY, ticket_issuer VARCHAR(30), ticket_description VARCHAR(200))";
-		final String createUsersTable = "CREATE TABLE jpapa_users(uid INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(30), upass VARCHAR(30), admin int)";
+		final String createTicketsTable = "CREATE TABLE ycastro2_tickets(ticket_id INT AUTO_INCREMENT PRIMARY KEY, ticket_issuer VARCHAR(30), ticket_description VARCHAR(200), start_date DATETIME , end_date DATETIME)";
+		final String createUsersTable = "CREATE TABLE ycastro2_users(uid INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(30), upass VARCHAR(30), admin int)";
 
 		try {
 
@@ -97,9 +98,10 @@ public class Dao {
 			// and PASS (insert) that data into your User table
 			for (List<String> rowData : array) {
 
-				sql = "insert into jpapa_users(uname,upass,admin) " + "values('" + rowData.get(0) + "'," + " '"
+				sql = "insert into ycastro2_users(uname,upass,admin) " + "values('" + rowData.get(0) + "'," + " '"
 						+ rowData.get(1) + "','" + rowData.get(2) + "');";
 				statement.executeUpdate(sql);
+
 			}
 			System.out.println("Inserts completed in the given database...");
 
@@ -111,12 +113,33 @@ public class Dao {
 		}
 	}
 
-	public int insertRecords(String ticketName, String ticketDesc) {
+	//public void addNewUsers() {
+	//	try {
+		//	String query;
+			// Setup the connection with the DB
+
+			//statement = getConnection().createStatement();
+
+	
+			//query = "INSERT INTO jpapa_users(uname,upass,admin) " + "values('yelitza', 2407 , 1);";
+			//	statement.executeQuery(query);
+			//System.out.println("Inserts completed in the given database...");
+		
+			// close statement object
+			//statement.close();
+
+	//	} catch (Exception e) {
+		//	System.out.println(e.getMessage());
+			//}
+		//}
+		
+
+	public int insertRecords(String ticketName, String ticketDesc, Date sqlDate) {
 		int id = 0;
 		try {
 			statement = getConnection().createStatement();
-			statement.executeUpdate("Insert into jpapa_tickets" + "(ticket_issuer, ticket_description) values(" + " '"
-					+ ticketName + "','" + ticketDesc + "')", Statement.RETURN_GENERATED_KEYS);
+			statement.executeUpdate("Insert into ycastro2_tickets" + "(ticket_issuer, ticket_description, start_date) values(" + " '"
+					+ ticketName + "','" + ticketDesc + "', '"+sqlDate+"')", Statement.RETURN_GENERATED_KEYS);
 
 			// retrieve ticket id number newly auto generated upon record insertion
 			ResultSet resultSet = null;
@@ -139,7 +162,7 @@ public class Dao {
 		ResultSet results = null;
 		try {
 			statement = connect.createStatement();
-			results = statement.executeQuery("SELECT * FROM jpapa_tickets");
+			results = statement.executeQuery("SELECT * FROM ycastro2_tickets");
 			//connect.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -147,17 +170,18 @@ public class Dao {
 		return results;
 	}
 	// continue coding for updateRecords implementation
-	public void deleteRecords(int tickID) {
-	      System.out.println("Creating statement...");
-	      try {
-			statement = connect.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	      String sql = "DELETE FROM jpapa_tickets  " + "WHERE id =  +  '“+tickID+";
+	public int deleteRecords(String ticketNumber) {
+		int id = 0;
+	     System.out.println("Creating statement...");
+	      	try {
+	      		statement = connect.createStatement();
+	      	}catch (SQLException e) {
+	      		// TODO Auto-generated catch block
+	      		e.printStackTrace();
+	      	}
+	     String sql = "DELETE FROM ycastro2_tickets  " + "WHERE ticket_id =  +  '“+ticketNumber+";
 	    
-	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket #" + tickID + "?" ,
+	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket #" + ticketNumber + "?" ,
 	                               "Confirm",  JOptionPane.YES_NO_OPTION, 
 	                               JOptionPane.QUESTION_MESSAGE);
 	     if (response == JOptionPane.NO_OPTION) {
@@ -173,6 +197,7 @@ public class Dao {
 	    } else if (response == JOptionPane.CLOSED_OPTION) {
 	      System.out.println("Request cancelled");
 	    }
+	 return  id;
 
 	}
 
