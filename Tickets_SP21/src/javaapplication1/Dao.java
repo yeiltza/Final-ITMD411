@@ -170,8 +170,9 @@ public class Dao {
 		return results;
 	}
 	// continue coding for updateRecords implementation
+	
 	public int deleteRecords(String ticketNumber) {
-		int id = 0;
+		
 	     System.out.println("Creating statement...");
 	      	try {
 	      		statement = connect.createStatement();
@@ -179,27 +180,61 @@ public class Dao {
 	      		// TODO Auto-generated catch block
 	      		e.printStackTrace();
 	      	}
-	     String sql = "DELETE FROM ycastro2_tickets  " + "WHERE ticket_id =  +  '“+ticketNumber+";
+	     String sql = "DELETE FROM ycastro2_tickets" + " WHERE ticket_id = " +  ticketNumber; //Don't understand why it gives me an error
 	    
-	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket #" + ticketNumber + "?" ,
-	                               "Confirm",  JOptionPane.YES_NO_OPTION, 
-	                               JOptionPane.QUESTION_MESSAGE);
+	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket #" + ticketNumber + "?" ,"Confirm",  JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	     
 	     if (response == JOptionPane.NO_OPTION) {
 	       System.out.println("No record deleted");
-	    } else if (response == JOptionPane.YES_OPTION) {
+	       
+	     }else if (response == JOptionPane.YES_OPTION) {
+	    	 try {
+	    		 statement.executeUpdate(sql);
+	    	} catch (SQLException e) {
+	    		// TODO Auto-generated catch block
+	    		e.printStackTrace();
+	    	}
+	    	 System.out.println("Record deleted");
+	    } else if (response == JOptionPane.CLOSED_OPTION) {
+	    	System.out.println("Request cancelled");
+	    	}
+	     return  0;
+
+	}
+	public int updateTicket(String ticketNumber, String ticketDesc) {
+		System.out.println("Creating update statement...");
+	      try {
+			statement = connect.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      String sql = "UPDATE ycastro2_tickets " + "SET ticket_desc = " +  ticketDesc + " WHERE ticket_id'" + ticketNumber;
 	      try {
 			statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	      System.out.println("Record deleted");
-	    } else if (response == JOptionPane.CLOSED_OPTION) {
-	      System.out.println("Request cancelled");
-	    }
-	 return  id;
-
+	     
+		return 0;
+		
 	}
+	public int updateEndDate(Date sqlDate) {
+		int id = 0;
+		try {
+			statement = getConnection().createStatement();
+			statement.executeUpdate("Insert into ycastro2_tickets" + "( end_date) values(" + " '"+sqlDate+"')", Statement.RETURN_GENERATED_KEYS);
+
+			// retrieve ticket id number newly auto generated upon record insertion
+			
+			
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return id;
+}
 
 	// continue coding for deleteRecords implementation
 }
