@@ -1,11 +1,14 @@
  package javaapplication1;
-
+ import java.sql.Connection;
+ import java.sql.DriverManager;
+ import java.sql.PreparedStatement;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -141,10 +144,12 @@ public class Tickets extends JFrame implements ActionListener {
 			// get ticket information
 			String ticketName = JOptionPane.showInputDialog(null, "Enter your name");
 			String ticketDesc = JOptionPane.showInputDialog(null, "Enter a ticket description");
-
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			
 			// insert ticket information to database
 
-			int id = dao.insertRecords(ticketName, ticketDesc);
+			int id = dao.insertRecords(ticketName, ticketDesc, sqlDate);
 
 			// display results if successful or not to console / dialog box
 			if (id != 0) {
@@ -171,10 +176,17 @@ public class Tickets extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		//else if (e.getSource() == mnuItemDelete) {
-			//int ticketNumber = JOptionPane.showInputDialog(null, "Enter ticket number");
+		else if (e.getSource() == mnuItemDelete) {
+			String ticketNumber = JOptionPane.showInputDialog(null, "Enter ticket number");
 
-			//int id = dao.deleteRecords(ticketNumber);
+			int id = dao.deleteRecords(ticketNumber);
+			// display results if successful or not to console / dialog box
+			if (id != 0) {
+				System.out.println("Ticket ID : " + id + " created successfully!!!");
+				JOptionPane.showMessageDialog(null, "Ticket id: " + id + " created");
+			} else
+			System.out.println("Ticket cannot be created!!!");
+			}
 			
 	}
 		/*
@@ -184,4 +196,4 @@ public class Tickets extends JFrame implements ActionListener {
 
 	}
 
-//}
+
