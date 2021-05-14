@@ -1,7 +1,4 @@
  package javaapplication1;
- import java.sql.Connection;
- import java.sql.DriverManager;
- import java.sql.PreparedStatement;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -147,6 +144,9 @@ public class Tickets extends JFrame implements ActionListener {
 			java.util.Date utilDate = new java.util.Date();
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 			
+			
+			
+			
 			// insert ticket information to database
 
 			int id = dao.insertRecords(ticketName, ticketDesc, sqlDate);
@@ -177,23 +177,36 @@ public class Tickets extends JFrame implements ActionListener {
 			}
 		}
 		else if (e.getSource() == mnuItemDelete) {
+			// get ticket number from user
 			String ticketNumber = JOptionPane.showInputDialog(null, "Enter ticket number");
-
+			//insert ticket info into database
 			int id = dao.deleteRecords(ticketNumber);
 			// display results if successful or not to console / dialog box
 			if (id != 0) {
-				System.out.println("Ticket ID : " + id + " created successfully!!!");
-				JOptionPane.showMessageDialog(null, "Ticket id: " + id + " created");
+				System.out.println("Ticket ID : " + id + " deleted successfully!!!");
+				JOptionPane.showMessageDialog(null, "Ticket id: " + id + " deleted");
 			} else
 			System.out.println("Ticket cannot be created!!!");
 			}
+		else if (e.getSource()== mnuItemUpdate) {
+			// get ticket id from user
+			String ticketNumber = JOptionPane.showInputDialog(null, "Enter ticket number");
+			String ticketDesc = JOptionPane.showInputDialog(null, "Enter a  new ticket description");
+			int id = dao.updateTicket(ticketNumber, ticketDesc);
+			if (id != 0) {
+				System.out.println("Ticket ID : " + id + " updated successfully!!!");
+				JOptionPane.showMessageDialog(null, "Ticket id: " + id + " deleted");
+			} else
+			System.out.println("Ticket cannot be created!!!");
+
 			
-	}
+		}
+	}}
 		/*
 		 * continue implementing any other desired sub menu items (like for update and
 		 * delete sub menus for example) with similar syntax & logic as shown above
 		 */
 
-	}
+	
 
 
