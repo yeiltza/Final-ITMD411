@@ -93,6 +93,10 @@ public class Tickets extends JFrame implements ActionListener {
 			mnuItemViewTicket = new JMenuItem("View Ticket");
 			// add to Ticket Main menu item
 			mnuTickets.add(mnuItemViewTicket);
+			
+			mnuItemExit.addActionListener(this);
+			mnuItemOpenTicket.addActionListener(this);
+			mnuItemViewTicket.addActionListener(this);
 	  }
 
 		 /*
