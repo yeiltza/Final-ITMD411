@@ -171,7 +171,7 @@ public class Dao {
 	}
 	// continue coding for updateRecords implementation
 	public int deleteRecords(String ticketNumber) {
-		int id = 0;
+		
 	     System.out.println("Creating statement...");
 	      	try {
 	      		statement = connect.createStatement();
@@ -179,7 +179,7 @@ public class Dao {
 	      		// TODO Auto-generated catch block
 	      		e.printStackTrace();
 	      	}
-	     String sql = "DELETE FROM ycastro2_tickets  " + "WHERE ticket_id =  +  '“+ticketNumber+";
+	     String sql = "DELETE FROM ycastro2_tickets" + "WHERE ticket_id = " +  "+ticketNumber+";
 	    
 	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket #" + ticketNumber + "?" ,
 	                               "Confirm",  JOptionPane.YES_NO_OPTION, 
@@ -197,7 +197,7 @@ public class Dao {
 	    } else if (response == JOptionPane.CLOSED_OPTION) {
 	      System.out.println("Request cancelled");
 	    }
-	 return  id;
+	 return  0;
 
 	}
 
