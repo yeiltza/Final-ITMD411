@@ -85,7 +85,14 @@ public class Tickets extends JFrame implements ActionListener {
 			mnuItemExit = new JMenuItem("Exit");
 			// add to File main menu item
 			mnuFile.add(mnuItemExit);
-		  
+			// initialize first sub menu item for Tickets main menu
+			mnuItemOpenTicket = new JMenuItem("Open Ticket");
+			// add to Ticket Main menu item
+			mnuTickets.add(mnuItemOpenTicket);
+			// initialize second sub menu item for Tickets main menu
+			mnuItemViewTicket = new JMenuItem("View Ticket");
+			// add to Ticket Main menu item
+			mnuTickets.add(mnuItemViewTicket);
 	  }
 
 		 /*
@@ -161,9 +168,9 @@ public class Tickets extends JFrame implements ActionListener {
 			}
 		}
 		//else if (e.getSource() == mnuItemDelete) {
-			//String ticketNumber = JOptionPane.showInputDialog(null, "Enter ticket number");
+			//int ticketNumber = JOptionPane.showInputDialog(null, "Enter ticket number");
 
-			//int id = dao.deleteRecords(ticketName, ticketDesc);
+			//int id = dao.deleteRecords(ticketNumber);
 			
 	}
 		/*
