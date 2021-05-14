@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class Dao {
 	// instance fields
 	static Connection connect = null;
@@ -145,19 +147,28 @@ public class Dao {
 		return results;
 	}
 	// continue coding for updateRecords implementation
-	public void deleteRecords() {
+	public void deleteRecords(int tickID) {
 	      System.out.println("Creating statement...");
-	      statement = connect.createStatement();
-	      String sql = "DELETE FROM jpapa_tickets  " +
-	                   "WHERE id = “ + ‘ “+tickID+ " ’;
+	      try {
+			statement = connect.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      String sql = "DELETE FROM jpapa_tickets  " + "WHERE id =  +  '“+tickID+";
 	    
-	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket # “ + tickID + “?”,
+	     int response = JOptionPane.showConfirmDialog(null, "Delete ticket #" + tickID + "?" ,
 	                               "Confirm",  JOptionPane.YES_NO_OPTION, 
 	                               JOptionPane.QUESTION_MESSAGE);
 	     if (response == JOptionPane.NO_OPTION) {
 	       System.out.println("No record deleted");
 	    } else if (response == JOptionPane.YES_OPTION) {
-	      stmt.executeUpdate(sql);
+	      try {
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	      System.out.println("Record deleted");
 	    } else if (response == JOptionPane.CLOSED_OPTION) {
 	      System.out.println("Request cancelled");
